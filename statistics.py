@@ -39,15 +39,6 @@ principal_components = pca.fit_transform(scaled_data)
 # Convert the principal components to a DataFrame for easier handling and analysis, adding proper column names
 pca_df = pd.DataFrame(data=principal_components, columns=[f'PC{i+1}' for i in range(principal_components.shape[1])])
 
-# Add back the columns that were not used in PCA (first column and the last 56 columns)
-columns_to_add_back = df_fea.iloc[:, [0] + list(range(-56, 0))]
-
-# Concatenate the retained columns with the PCA-reduced DataFrame to create the final DataFrame
-final_df = pd.concat([columns_to_add_back.reset_index(drop=True), pca_df], axis=1)
-
-# Display the first few rows of the final DataFrame to verify the result
-print(final_df.head())
-
 # Fit PCA without reducing components first to visualize explained variance and determine the optimal number of components
 pca_full = PCA()
 pca_full.fit(scaled_data)
@@ -69,3 +60,15 @@ pca = PCA(n_components=20)  # This value is based on where the explained varianc
 
 # Fit and transform the data again using the adjusted number of components
 principal_components = pca.fit_transform(scaled_data)
+
+# Convert the principal components to a DataFrame for easier handling and analysis, adding proper column names
+pca_df = pd.DataFrame(data=principal_components, columns=[f'PC{i+1}' for i in range(principal_components.shape[1])])
+
+# Add back the columns that were not used in PCA (first column and the last 56 columns)
+columns_to_add_back = df_fea.iloc[:, [0] + list(range(-56, 0))]
+
+# Concatenate the retained columns with the PCA-reduced DataFrame to create the final DataFrame
+final_df = pd.concat([columns_to_add_back.reset_index(drop=True), pca_df], axis=1)
+
+# Display the first few rows of the final DataFrame to verify the result
+print(final_df.head())

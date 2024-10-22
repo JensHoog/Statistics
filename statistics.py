@@ -18,13 +18,13 @@ df_fea = df_fea.fillna(0)
 encoded_df = pd.get_dummies(df_fea, columns=['statistiek_hoofdgroep', 'statistiek_subgroep'])
 
 # Convert the one-hot encoded DataFrame to integer type to save memory
-df_fea = encoded_df.astype(int)
+encoded_df = encoded_df.astype(int)
 
 # Display the transformed DataFrame after one-hot encoding
-print(df_fea)
+print(encoded_df)
 
 # Select all columns except the first one and the last 56 columns for further processing
-selected_data = df_fea.iloc[:, 1:-56]
+selected_data = encoded_df.iloc[:, 1:-56]
 
 # Standardize the selected data to have mean=0 and variance=1, which is important for PCA
 scaler = StandardScaler()
